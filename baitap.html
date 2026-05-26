@@ -223,56 +223,47 @@
 <script>
     // --------------------------------------------------------------
     // DANH SÁCH CÂU HỎI (20 câu: 5 lý thuyết, 15 bài tập phân theo độ khó)
-    // Mỗi câu: id, text, options [A,B,C,D], correct (0-index), level, giải thích + mẹo
     // --------------------------------------------------------------
-    const questions = [
-        // ----- 5 LÝ THUYẾT (cơ bản về midpoint & triết lý) -----
+    const questionsData = [
+        // ----- 5 LÝ THUYẾT (cơ bản) -----
         { id: 1, type: "theory", level: "Dễ", text: "Theo bài giảng của Dr.rer.nat Duymt, midpoint không chỉ là công thức mà còn che giấu triết lý gì?", options: ["Sự cực trị của hàm số", "Điểm cân bằng, dung hòa, không thiên vị", "Điểm bất động", "Trung bình nhân của hai số"], correct: 1, explanation: "Midpoint là biểu tượng của sự dung hòa giữa hai cực, thể hiện tư duy cân bằng – điểm gặp nhau của đối lập.", tip: "Nhớ câu: 'Mọi sự đối lập đều có điểm gặp nhau – đó là midpoint.'" },
         { id: 2, type: "theory", level: "Dễ", text: "Deconstruction theo phương pháp DUYMT đối với công thức trung điểm có nghĩa là:", options: ["Học thuộc lòng \((x_1+x_2)/2\)", "Xuất phát từ điều kiện \(\\vec{AM} = \\vec{MB}\) để suy ra công thức", "Dùng máy tính bỏ túi", "Vẽ hình và đo đạc"], correct: 1, explanation: "Deconstruction là tái tạo từ gốc: \(\\vec{AM}=\\vec{MB} \\Rightarrow M-A = B-M \\Rightarrow 2M=A+B\).", tip: "Luôn tự hỏi 'tại sao lại là chia đôi?' rồi chứng minh bằng vector." },
-        { id: 3, type: "theory", level: "Trung bình", text: "Trong lượng giác, công thức hạ bậc \(\\cos^2\\alpha = \\frac{1+\\cos2\\alpha}{2}\) thể hiện cấu trúc midpoint giữa hai giá trị nào?", options: ["1 và \(\\sin2\\alpha\)", "0 và \(\\cos2\\alpha\)", "1 và \(\\cos2\\alpha\)", "\(\\sin^2\\alpha\) và \(\\cos^2\\alpha\)"], correct: 2, explanation: "Đây là trung bình cộng của 1 và \(\\cos2\\alpha\), đúng tinh thần midpoint.", tip: "Công thức góc nhân đôi: \(\\cos2\\alpha = 2\\cos^2\\alpha -1 \\Rightarrow \\cos^2\\alpha = (1+\\cos2\\alpha)/2\)." },
+        { id: 3, type: "theory", level: "Trung bình", text: "Trong lượng giác, công thức hạ bậc \(\\cos^2\\alpha = \\frac{1+\\cos2\\alpha}{2}\) thể hiện cấu trúc midpoint giữa hai giá trị nào?", options: ["1 và \(\\sin2\\alpha\)", "0 và \(\\cos2\\alpha\)", "1 và \(\\cos2\\alpha\)", "\(\sin^2\\alpha\) và \(\\cos^2\\alpha\)"], correct: 2, explanation: "Đây là trung bình cộng của 1 và \(\\cos2\\alpha\), đúng tinh thần midpoint.", tip: "Công thức góc nhân đôi: \(\\cos2\\alpha = 2\\cos^2\\alpha -1 \\Rightarrow \\cos^2\\alpha = (1+\\cos2\\alpha)/2\)." },
         { id: 4, type: "theory", level: "Trung bình", text: "Harnessing AI trong bài giảng midpoint được hiểu là:", options: ["Cấm sử dụng AI trong học tập", "Ra prompt có cấu trúc, cung cấp ngữ cảnh để AI clone phong cách giảng dạy", "Để AI tự động ra đề thi", "Dùng AI chấm điểm tự luận"], correct: 1, explanation: "Harnessing = ghì cương, hướng dẫn AI bằng prompt rõ ràng theo 8 thành tố DUYMT.", tip: "Prompt mẫu: 'Hãy giảng midpoint theo phong cách Dr.Duymt, dùng deconstruction, ẩn dụ, kết nối không gian'." },
         { id: 5, type: "theory", level: "Khó", text: "Triết học hóa midpoint dẫn đến thông điệp sâu sắc nào?", options: ["Luôn phải chọn một trong hai cực đoan", "Điểm giữa luôn tối ưu nhất", "Dung hòa, tránh cực đoan, tìm điểm gặp nhau của các mặt đối lập", "Midpoint chỉ tồn tại trong toán học"], correct: 2, explanation: "Bài học cuộc sống: không phải lúc nào cũng chọn một trong hai, đứng ở giữa là sự khôn ngoan.", tip: "Liên hệ hòa giải xung đột, cân bằng lợi ích." },
         
-        // ----- 5 BÀI TẬP DỄ (midpoint hình học cơ bản, tọa độ) -----
+        // ----- 5 BÀI TẬP DỄ (midpoint hình học cơ bản) -----
         { id: 6, type: "exercise", level: "Dễ", text: "Cho hai điểm \(A(2,3)\) và \(B(4,7)\). Tọa độ trung điểm M của đoạn AB là:", options: ["\((3,5)\)", "\((6,10)\)", "\((2.5,5)\)", "\((3,4)\)"], correct: 0, explanation: "\(M_x = (2+4)/2 = 3\), \(M_y = (3+7)/2 = 5\).", tip: "Cộng tọa độ rồi chia đôi – nhanh gọn." },
         { id: 7, type: "exercise", level: "Dễ", text: "Điểm \(M(5, -2)\) là trung điểm của \(A(3, y)\) và \(B(7, -4)\). Tìm \(y\).", options: ["\(y = 2\)", "\(y = -2\)", "\(y = 0\)", "\(y = -1\)"], correct: 2, explanation: "\(M_y = (y + (-4))/2 = -2 \\Rightarrow y -4 = -4 \\Rightarrow y=0\).", tip: "Dùng công thức trung điểm cho tung độ: \((y_A+y_B)/2 = y_M\)." },
         { id: 8, type: "exercise", level: "Dễ", text: "Trên trục số, trung điểm của đoạn từ \(-5\) đến \(9\) là:", options: ["\(2\)", "\(4\)", "\(-1\)", "\(7\)"], correct: 0, explanation: "\((-5+9)/2 = 4/2 = 2\).", tip: "Trung bình cộng hai đầu mút." },
         { id: 9, type: "exercise", level: "Dễ", text: "Nếu \(A(-2,1)\) và \(M(0,3)\) là trung điểm của AB, tìm tọa độ B.", options: ["\(B(2,5)\)", "\(B(4,4)\)", "\(B(1,4)\)", "\(B(-2,5)\)"], correct: 0, explanation: "\(0 = (-2+x_B)/2 \\Rightarrow x_B=2\); \(3 = (1+y_B)/2 \\Rightarrow y_B=5\).", tip: "Nhân đôi tọa độ trung điểm rồi trừ tọa độ điểm đầu." },
         { id: 10, type: "exercise", level: "Dễ", text: "Cho hình bình hành ABCD, biết A(1,1), C(5,5). Giao điểm hai đường chéo (trung điểm mỗi đường) có tọa độ:", options: ["\((3,3)\)", "\((2.5,2.5)\)", "\((6,6)\)", "\((4,4)\)"], correct: 0, explanation: "Giao điểm là trung điểm của AC: \(( (1+5)/2 , (1+5)/2 ) = (3,3)\).", tip: "Hình bình hành: hai đường chéo cắt nhau tại trung điểm mỗi đường." },
         
-        // ----- 5 BÀI TẬP TRUNG BÌNH (lượng giác, tích phân midpoint rule, ứng dụng) -----
+        // ----- 5 BÀI TẬP TRUNG BÌNH (lượng giác, tích phân, không gian) -----
         { id: 11, type: "exercise", level: "Trung bình", text: "Sử dụng công thức hạ bậc (midpoint của 1 và cos2α), biểu thức \(\\sin^2 15^\\circ\) bằng:", options: ["\(\frac{1-\\cos30^\\circ}{2}\)", "\(\frac{1+\\cos30^\\circ}{2}\)", "\(\frac{1-\\cos15^\\circ}{2}\)", "\(\frac{1-\\sin30^\\circ}{2}\)"], correct: 0, explanation: "\(\sin^2\\alpha = \\frac{1-\\cos2\\alpha}{2}\), với \(\\alpha=15^\\circ\\Rightarrow \\sin^2 15^\\circ = \\frac{1-\\cos30^\\circ}{2}\).", tip: "Nhớ: \(\sin^2 = (1-\\cos2x)/2\); \(\cos^2 = (1+\\cos2x)/2\)." },
         { id: 12, type: "exercise", level: "Trung bình", text: "Tính gần đúng tích phân \(\\int_{0}^{4} x^2 dx\) bằng Midpoint Rule với 1 khoảng (chỉ một bước).", options: ["\(16\)", "\(8\)", "\(32\)", "\(4\)"], correct: 0, explanation: "Midpoint: \((b-a)f((a+b)/2) = (4-0) \\cdot f(2) = 4 \\cdot (2^2) = 4 \\cdot 4 = 16\).", tip: "Lấy chiều dài khoảng nhân giá trị hàm tại trung điểm." },
         { id: 13, type: "exercise", level: "Trung bình", text: "Trong không gian Oxyz, trung điểm của \(A(1,2,3)\) và \(B(3,4,5)\) là:", options: ["\((2,3,4)\)", "\((4,6,8)\)", "\((2,3,5)\)", "\((1.5,2.5,3.5)\)"], correct: 0, explanation: "\(\frac{1+3}{2}=2, \frac{2+4}{2}=3, \frac{3+5}{2}=4\).", tip: "Mở rộng công thức trung bình cộng từng tọa độ." },
         { id: 14, type: "exercise", level: "Trung bình", text: "Cho dữ liệu thống kê: 3, 7, 8, 12, 15. Trung vị (median) – midpoint của dữ liệu đã sắp xếp là:", options: ["7", "8", "9", "10"], correct: 1, explanation: "Sắp xếp: 3,7,8,12,15 → phần tử thứ 3 là 8 (midpoint phân vị).", tip: "Với lẻ điểm, median là giá trị chính giữa." },
         { id: 15, type: "exercise", level: "Trung bình", text: "Áp dụng midpoint để tính trung bình cộng của hai số \(2\\sqrt{3}\) và \(4\\sqrt{3}\). Kết quả:", options: ["\(3\\sqrt{3}\)", "\(\\sqrt{3}\)", "\(6\\sqrt{3}\)", "\(2\\sqrt{3}\)"], correct: 0, explanation: "\((2\\sqrt{3}+4\\sqrt{3})/2 = (6\\sqrt{3})/2 = 3\\sqrt{3}\).", tip: "Cộng hệ số, giữ nguyên căn." },
         
-        // ----- 5 BÀI TẬP KHÓ (giải tích, chứng minh, ứng dụng AI / centroid) -----
-        { id: 16, type: "exercise", level: "Khó", text: "Sai số của Midpoint Rule cho hàm \(f(x)=x^3\) trên đoạn \([0,2]\) với 1 khoảng (so sánh với tích phân chính xác) là:", options: ["\(0\)", "\(-2\)", "\(2\)", "\(1\)"], correct: 0, explanation: "\(\int_0^2 x^3 dx = 4\). Midpoint: \(2\\cdot f(1)=2\\cdot1=2\). Sai số = 4-2=2? Nhưng nếu xét giá trị xấp xỉ thiếu, đáp án đúng: sai số tuyệt đối 2. Tuy nhiên câu hỏi: Sai số (exact - approx) = \(4-2=2\). Đáp án 2.", tip: "Tính chính xác: \(F(2)-F(0)=4\), midpoint: \(2*(1)^3=2\), sai số = 2. Cẩn thận dấu." },
-        // Điều chỉnh cho chính xác: đáp án là 2 (tương ứng option C)
-        { id: 16fix: true, idShow: 16, type: "exercise", level: "Khó", text: "Sai số tuyệt đối khi xấp xỉ \(\\int_0^2 x^3 dx\) bằng Midpoint Rule (1 khoảng) so với giá trị thật là:", options: ["0", "1", "2", "4"], correct: 2, explanation: "Giá trị thật = 4. Xấp xỉ = (2-0)*f(1)=2*1=2 → sai số = 2.", tip: "Công thức sai số: \(\\frac{(b-a)^3}{24}f''(\\xi)\), với f''(x)=6x → f''(ξ)=6*1=6 nên sai số=8*6/24=2." },
+        // ----- 5 BÀI TẬP KHÓ (sai số tích phân, K-means, số phức, xấp xỉ) -----
+        { id: 16, type: "exercise", level: "Khó", text: "Sai số tuyệt đối khi xấp xỉ \(\\int_0^2 x^3 dx\) bằng Midpoint Rule (1 khoảng) so với giá trị thật là:", options: ["0", "1", "2", "4"], correct: 2, explanation: "Giá trị thật = 4. Xấp xỉ = (2-0)*f(1)=2*1=2 → sai số = 2.", tip: "Công thức sai số: \(\\frac{(b-a)^3}{24}f''(\\xi)\), với f''(x)=6x → f''(ξ)=6*1=6 nên sai số=8*6/24=2." },
         { id: 17, type: "exercise", level: "Khó", text: "Trong thuật toán K-means, centroid của cụm gồm các điểm (0,0), (2,2), (4,4) là midpoint (trung bình) có tọa độ:", options: ["(2,2)", "(3,3)", "(1,1)", "(2.5,2.5)"], correct: 0, explanation: "Trung bình: ((0+2+4)/3 , (0+2+4)/3) = (6/3,6/3) = (2,2).", tip: "Centroid = trung bình cộng vector, chính là midpoint tổng quát hóa." },
         { id: 18, type: "exercise", level: "Khó", text: "Cho phương trình đường tròn \((x-2)^2 + (y+1)^2 = 25\). Trung điểm của dây cung AB biết A(6,2) và B(-2,-4) nằm trên đường tròn. Tọa độ trung điểm M:", options: ["(2,-1)", "(4,-2)", "(2,0)", "(0,-1)"], correct: 0, explanation: "M = ((6+(-2))/2 , (2+(-4))/2) = (4/2 , -2/2) = (2,-1).", tip: "Dù trên đường tròn, trung điểm dây cung chỉ cần công thức cộng tọa độ." },
         { id: 19, type: "exercise", level: "Khó", text: "Trong mặt phẳng phức, midpoint của hai số phức \(z_1 = 3+4i\) và \(z_2 = 7-2i\) là:", options: ["\(5+i\)", "\(5+3i\)", "\(2+3i\)", "\(10+2i\)"], correct: 0, explanation: "Midpoint = \((z_1+z_2)/2 = (10+2i)/2 = 5+i\).", tip: "Cộng phần thực, phần ảo rồi chia đôi." },
-        { id: 20, type: "exercise", level: "Khó", text: "Cho hàm \(f(x)=\\sqrt{x}\). Xấp xỉ \(\\int_{1}^{9} \\sqrt{x} dx\) bằng Midpoint Rule với 1 khoảng (chọn điểm giữa x=5). Giá trị xấp xỉ là:", options: ["\(8\\sqrt{5}\)", "\(8\\cdot \\sqrt{5}\)", "16", "\(9-1)\\sqrt{5}\)"], correct: 0, explanation: "Chiều dài =8, \(f(5)=\\sqrt{5}\), vậy tích phân xấp xỉ \(8\\sqrt{5}\).", tip: "Chính xác: \((b-a) f((a+b)/2)\) = \(8\\cdot\\sqrt{5}\)." }
-    ];
-    // Sửa lại câu 16 cho đúng object
-    const finalQuestions = [
-        questions[0],questions[1],questions[2],questions[3],questions[4],
-        questions[5],questions[6],questions[7],questions[8],questions[9],
-        questions[10],questions[11],questions[12],questions[13],questions[14],
-        { id:16, type:"exercise", level:"Khó", text:"Sai số tuyệt đối khi xấp xỉ \(\\int_0^2 x^3 dx\) bằng Midpoint Rule (1 khoảng) so với giá trị thật là:", options:["0","1","2","4"], correct:2, explanation:"Giá trị thật = 4. Xấp xỉ = (2-0)*f(1)=2*1=2 → sai số = 2.", tip:"Công thức sai số: \(\\frac{(b-a)^3}{24}f''(\\xi)\), với f''(x)=6x → f''(ξ)=6*1=6 nên sai số=8*6/24=2." },
-        questions[16],questions[17],questions[18],questions[19]
+        { id: 20, type: "exercise", level: "Khó", text: "Cho hàm \(f(x)=\\sqrt{x}\). Xấp xỉ \(\\int_{1}^{9} \\sqrt{x} dx\) bằng Midpoint Rule với 1 khoảng (chọn điểm giữa x=5). Giá trị xấp xỉ là:", options: ["\(8\\sqrt{5}\)", "\(8\\cdot \\sqrt{5}\)", "16", "\((9-1)\\sqrt{5}\)"], correct: 0, explanation: "Chiều dài =8, \(f(5)=\\sqrt{5}\), vậy tích phân xấp xỉ \(8\\sqrt{5}\).", tip: "Chính xác: \((b-a) f((a+b)/2)\) = \(8\\cdot\\sqrt{5}\)." }
     ];
     
-    let userAnswers = new Array(finalQuestions.length).fill(null);
-    let answerStatus = new Array(finalQuestions.length).fill(false); // đã trả lời hay chưa (feedback hiển thị)
+    // State
+    let userAnswers = new Array(questionsData.length).fill(null);
     
+    // Render toàn bộ câu hỏi
     function renderQuestions() {
         const container = document.getElementById('questionsList');
         if(!container) return;
         container.innerHTML = '';
-        finalQuestions.forEach((q, idx) => {
+        
+        questionsData.forEach((q, idx) => {
             const qDiv = document.createElement('div');
             qDiv.className = 'question-card';
             let levelClass = '';
@@ -281,6 +272,19 @@
             else levelClass = 'level-k';
             const levelTag = `<span class="level-tag ${levelClass}">${q.level}</span>`;
             const typeTag = q.type === 'theory' ? '📘 Lý thuyết' : '📐 Bài tập';
+            
+            // Tạo html cho options
+            let optionsHtml = '';
+            q.options.forEach((opt, optIdx) => {
+                const letter = String.fromCharCode(65 + optIdx);
+                optionsHtml += `
+                    <div class="option" data-optidx="${optIdx}">
+                        <div class="option-letter">${letter}</div>
+                        <div class="option-text">${opt}</div>
+                    </div>
+                `;
+            });
+            
             qDiv.innerHTML = `
                 <div class="question-text">
                     <strong>Câu ${idx+1}:</strong> ${q.text} 
@@ -288,52 +292,54 @@
                     ${levelTag}
                 </div>
                 <div class="options" data-qidx="${idx}">
-                    ${q.options.map((opt, optIdx) => `
-                        <div class="option" data-optidx="${optIdx}">
-                            <div class="option-letter">${String.fromCharCode(65+optIdx)}</div>
-                            <div class="option-text">${opt}</div>
-                        </div>
-                    `).join('')}
+                    ${optionsHtml}
                 </div>
                 <div class="feedback" id="fb-${idx}"></div>
             `;
             container.appendChild(qDiv);
-            // gán sự kiện cho option
-            const optsDiv = qDiv.querySelector('.options');
-            const optionsDivs = optsDiv.querySelectorAll('.option');
-            optionsDivs.forEach(optDiv => {
+            
+            // Gắn sự kiện cho từng option
+            const optsContainer = qDiv.querySelector('.options');
+            const optionDivs = optsContainer.querySelectorAll('.option');
+            optionDivs.forEach(optDiv => {
                 optDiv.addEventListener('click', (e) => {
                     const selectedIdx = parseInt(optDiv.dataset.optidx);
                     handleAnswer(idx, selectedIdx);
                 });
             });
-            // Nếu đã có câu trả lời trước đó, hiển thị lại trạng thái
+            
+            // Nếu đã có câu trả lời trước, hiển thị lại trạng thái
             if(userAnswers[idx] !== null) {
-                highlightOptionAndFeedback(idx, userAnswers[idx], true);
+                const selectedVal = userAnswers[idx];
+                const isCorrect = (selectedVal === q.correct);
+                applyFeedbackAndHighlight(idx, selectedVal, isCorrect);
             }
         });
         updateScore();
     }
     
     function handleAnswer(qIdx, selectedIdx) {
-        const question = finalQuestions[qIdx];
+        const question = questionsData[qIdx];
         const isCorrect = (selectedIdx === question.correct);
         userAnswers[qIdx] = selectedIdx;
-        answerStatus[qIdx] = true;
-        highlightOptionAndFeedback(qIdx, selectedIdx, isCorrect);
+        applyFeedbackAndHighlight(qIdx, selectedIdx, isCorrect);
         updateScore();
     }
     
-    function highlightOptionAndFeedback(qIdx, selectedIdx, isCorrect) {
+    function applyFeedbackAndHighlight(qIdx, selectedIdx, isCorrect) {
         const container = document.getElementById('questionsList');
         const qCard = container.children[qIdx];
         if(!qCard) return;
+        const question = questionsData[qIdx];
         const allOpts = qCard.querySelectorAll('.option');
-        // reset styles
+        
+        // Reset styles
         allOpts.forEach(opt => {
             opt.style.backgroundColor = '';
             opt.style.border = '1px solid #e2e8f0';
         });
+        
+        // Highlight lựa chọn của user
         const selectedDiv = allOpts[selectedIdx];
         if(selectedDiv) {
             if(isCorrect) {
@@ -342,22 +348,32 @@
             } else {
                 selectedDiv.style.backgroundColor = '#ffe0dd';
                 selectedDiv.style.border = '1px solid #d1453b';
-                // highlight đáp án đúng
-                const correctOpt = allOpts[finalQuestions[qIdx].correct];
-                if(correctOpt) correctOpt.style.backgroundColor = '#d9f0e3';
+                // Highlight đáp án đúng
+                const correctDiv = allOpts[question.correct];
+                if(correctDiv) {
+                    correctDiv.style.backgroundColor = '#d9f0e3';
+                    correctDiv.style.border = '1px solid #2c9a5e';
+                }
+            }
+        } else {
+            // fallback: nếu lỡ không tìm thấy
+            if(!isCorrect) {
+                const correctDiv = allOpts[question.correct];
+                if(correctDiv) correctDiv.style.backgroundColor = '#d9f0e3';
             }
         }
-        // hiển thị feedback
+        
+        // Tạo nội dung feedback
         const fbDiv = document.getElementById(`fb-${qIdx}`);
-        const q = finalQuestions[qIdx];
-        const correctLetter = String.fromCharCode(65 + q.correct);
+        const correctLetter = String.fromCharCode(65 + question.correct);
+        const correctAnswerText = question.options[question.correct];
         const userLetter = String.fromCharCode(65 + selectedIdx);
-        const correctAnswerText = q.options[q.correct];
+        
         fbDiv.innerHTML = `
             <div style="font-weight:bold; margin-bottom:6px;">${isCorrect ? '✅ Đúng!' : '❌ Sai!'}</div>
             <div><strong>Đáp án đúng:</strong> ${correctLetter}. ${correctAnswerText}</div>
-            <div><strong>Giải thích:</strong> ${q.explanation}</div>
-            <div class="tip">💡 <strong>Mẹo nhanh:</strong> ${q.tip}</div>
+            <div><strong>Giải thích:</strong> ${question.explanation}</div>
+            <div class="tip">💡 <strong>Mẹo nhanh:</strong> ${question.tip}</div>
         `;
         fbDiv.classList.add('show');
         if(isCorrect) {
@@ -371,35 +387,39 @@
     
     function updateScore() {
         let correctCount = 0;
-        for(let i=0; i<finalQuestions.length; i++) {
-            if(userAnswers[i] !== null && userAnswers[i] === finalQuestions[i].correct) correctCount++;
+        for(let i = 0; i < questionsData.length; i++) {
+            if(userAnswers[i] !== null && userAnswers[i] === questionsData[i].correct) {
+                correctCount++;
+            }
         }
-        document.getElementById('scoreDisplay').innerHTML = `✅ ${correctCount} / 20`;
+        const scoreSpan = document.getElementById('scoreDisplay');
+        if(scoreSpan) scoreSpan.innerHTML = `✅ ${correctCount} / 20`;
     }
     
     function resetExam() {
-        userAnswers = new Array(finalQuestions.length).fill(null);
-        answerStatus = new Array(finalQuestions.length).fill(false);
-        renderQuestions();
+        userAnswers = new Array(questionsData.length).fill(null);
+        renderQuestions();  // re-render sạch sẽ
     }
     
     function downloadHTML() {
-        // lấy nội dung html hiện tại (bao gồm cả script)
+        // Lấy toàn bộ nội dung html hiện tại (bao gồm cả style và script)
         const htmlContent = document.documentElement.outerHTML;
         const blob = new Blob([htmlContent], {type: 'text/html'});
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'de_thi_midpoint_20cau.html';
+        a.download = 'de_thi_trac_nghiem_midpoint_20cau.html';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
     }
     
+    // Gán sự kiện nút
     document.getElementById('resetBtn').addEventListener('click', resetExam);
     document.getElementById('downloadBtn').addEventListener('click', downloadHTML);
     
+    // Khởi tạo
     renderQuestions();
 </script>
 </body>
