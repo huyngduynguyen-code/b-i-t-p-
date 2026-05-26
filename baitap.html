@@ -524,4 +524,15 @@
         a.download = 'trac_nghiem_duong_thang.html';
         document.body.appendChild(a);
         a.click();
-        document.body.remove
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+    
+    document.getElementById('resetAllBtn').addEventListener('click', resetAll);
+    document.getElementById('downloadHtmlBtn').addEventListener('click', downloadAsHtml);
+    
+    // Khởi tạo
+    renderQuestions();
+</script>
+</body>
+</html>
